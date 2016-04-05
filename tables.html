@@ -1,0 +1,249 @@
+<html ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>tables</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+	<script type="text/javascript" src="angular.js"></script>
+	<script type="text/javascript" src="../javascriptexampls/js/jquery.js"></script>
+	<script type="text/javascript" src="../javascriptexampls/js/jquery-ui.min.js"></script>
+
+</head>
+<style>
+   table{
+   	margin-top:50px;
+   }
+   tr,th{
+   	text-align: center;
+   }
+  .div1{
+   	margin:auto;
+   	height:300px;
+   	width:300px;
+   	background-color: lightgray;
+   	text-align: center;
+   	
+
+   }
+   .div2{
+   	margin:auto;
+   	height:300px;
+   	width:300px;
+   	background-color: lightgray;
+   	text-align: center;
+   	
+
+   }
+   #name{
+   	margin-top: 30px;
+   	margin-left: 20px;
+   }
+   #age{
+   	margin-top: 10px;
+   	margin-left: 25px;
+   }
+   #zip{
+   	margin-top: 10px;
+   	margin-left: 25px;
+   }
+   #city{
+   	margin-top: 10px;
+   	margin-left: 24px;
+   }
+   #name1{
+    margin-top: 30px;
+    margin-left: 20px;
+   }
+   #age1{
+    margin-top: 10px;
+    margin-left: 25px;
+   }
+   #zip1{
+    margin-top: 10px;
+    margin-left: 25px;
+   }
+   #city1{
+    margin-top: 10px;
+    margin-left: 24px;
+   }
+</style>
+
+<body  ng-controller="myctrl" class="container">
+	
+	<div class="col-md-4">
+		<input class="form-control "type="text" ng-model="searchkey">
+	</div>
+	
+   
+  
+    <div ng-if="tablestatus">
+             <table class="table table-bordered table-hover">
+			    <thead>
+			      <tr>
+				     <th>Name</th>
+                     <th>Age</th>
+                     <th>Zip</th>
+                     <th>City</th>
+                     <th>Action</th>
+                     <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                   <tr ng-repeat="x in customers|filter:searchkey">
+
+                      <td>  {{ x.name }}  </td>
+                      <td>  {{ x.age }}   </td>
+                      <td>  {{ x.Zip }}   </td>
+                      <td> {{ x.city  }}  </td>
+                      <td><button class="btn btn-info"ng-click="deleteRow(index)">Delete</button></td>
+                      <td><button class="btn btn-success"ng-click="editform($index)">Edit</button></td>
+
+                   </tr>
+       
+                </tbody>
+             </table>
+                 <button ng-click="display()" class="btn btn-primary">Click</button>
+                 <button class="btn btn-success" ng-click="showform()">Add</button>
+
+    </div>
+    <div class="div1"  ng-show="show">
+		<form ng-submit="addRow()">
+	         <label>Name:</label>
+	         <input type="text"id="name" name="name" ng-model="name"/><br><br>
+	   
+             <label>Age:</label>
+	         <input type="text" id="age" name="age" ng-model="age"/><br><br>
+
+	         <label>Zip:</label>
+	         <input type="text" id="zip"  name="Zip" ng-model="Zip"/><br><br>
+	
+             <label>City:</label>
+	         <input type="text" id="city"name="city" ng-model="city"/><br><br>
+	
+             <input type="submit" value="save" class="btn btn-primary"/>
+        </form>
+             
+      </div>
+      <div class="div1" ng-show="editrow">
+		<form>
+	         <label>Name:</label>
+	         <input type="text"id="name1" name="name" ng-model="name"/><br><br>
+	   
+             <label>Age:</label>
+	         <input type="text" id="age1" name="age" ng-model="age"/><br><br>
+
+	         <label>Zip:</label>
+	         <input type="text" id="zip1"  name="Zip" ng-model="Zip"/><br><br>
+	
+             <label>City:</label>
+	         <input type="text" id="city1"name="city" ng-model="city"/><br><br>
+	
+             <input type="submit"value="save" ng-click="editingform()"class="btn btn-primary"/>
+        </form>
+             
+      </div>
+      
+      
+      
+
+</body>
+<script type="text/javascript">
+	var myApp=angular.module("myApp",[]);
+	myApp.controller("myctrl",function($scope){
+
+		$scope.tablestatus=true;
+		
+		
+		$scope.customers=[{
+			                'name':"Anny",
+			                'age':28,
+			                'Zip':94539,
+			                'city':"Fremont"
+			               },
+			               {
+			               	'name':"James",
+			                'age':33,
+			                'Zip':94539,
+			                'city':"Fremont"
+			            },
+			            {
+			            	'name':"Chintu",
+			                'age':5,
+			                'Zip':94539,
+			                'city':"Fremont"
+			            },
+			            {
+			            	'name':"varun",
+			                'age':8,
+			                'Zip':94539,
+			                'city':"Fremont"
+			            },
+			            {
+			            	"name":"ravi",
+			                "age":"35",
+			                "Zip":"94539",
+			                "city":"Fremont"
+			            },
+                  {
+                    "name":"thomas",
+                      "age":"38",
+                      "Zip":"94089",
+                      "city":"sunnyvale"
+                  },
+                  {
+                    "name":"mack",
+                      "age":"30",
+                      "Zip":"94539",
+                      "city":"Fremont"
+                  },
+			            ];
+			            
+			            $scope.deleteRow=function(index){
+			            	$scope.customers.splice(index,1);
+			            }
+			            $scope.display=function(){
+			            	$scope.tablestatus=false;
+
+			            }
+			            $scope.show=false;
+			            $scope.showform=function(){
+			            	$scope.show=true;
+			            }
+                  $scope.editrow=false;
+                  $scope.editform=function(indx){
+                    $scope.editrow=true;
+                    $scope.indexname=indx;
+                    $("#name1").val(this.customers[indx].name);
+                    $("#age1").val(this.customers[indx].age);
+                    $("#zip1").val(this.customers[indx].Zip);
+                    $("#city1").val(this.customers[indx].city);
+                  }
+			            
+			            
+			            
+			            $scope.addRow=function(){
+			            		
+	                       $scope.customers.push({ "name":$scope.name, "age":$scope.age, "Zip":$scope.Zip,"city":$scope.city });
+	                            $scope.name='';
+	                            $scope.age='';
+	                            $scope.Zip='';
+	                            $scope.city='';
+                         };
+                  $scope.editingform=function(){
+                    $scope.customers[this.indexname].name=$("#name1").val();
+                    $scope.customers[this.indexname].age=$("#age1").val();
+                    $scope.customers[this.indexname].Zip=$("#zip1").val();
+                    $scope.customers[this.indexname].city=$("#city1").val();
+                  };
+                  
+                         
+                         
+                         
+                     
+                         
+                        
+                        
+                     
+
+        });
+</script>
+</html>
